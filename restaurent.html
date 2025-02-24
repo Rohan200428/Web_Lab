@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasmine Restaurant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: #fdfbf8;
+            color: #2d2d2d;
+        }
+
+        .nav {
+            background-color: #1a1a1a;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0 2rem;
+            width: 100%;
+              }
+
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            color: #ffffff;
+            font-size: 1.8rem;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .carousel-item {
+            height: 80vh;
+        }
+
+        .carousel-item img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+        }
+
+        .specialties {
+            background-color: #ffffff;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
+        }
+
+        .specialties-list {
+            list-style-position: inside;
+            counter-reset: specialty-counter;
+        }
+
+        .specialties-list li {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: #fdfbf8;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            counter-increment: specialty-counter;
+        }
+
+        .specialties-list li::before {
+            content: counter(specialty-counter, upper-roman) ". ";
+            font-weight: bold;
+            color: #d4af37;
+        }
+
+        .specialties-list li:hover {
+            transform: translateX(10px);
+        }
+
+        .menu-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-table th {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 1.5rem;
+            text-align: left;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .menu-table td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .menu-table tr:hover {
+            background-color: #fdfbf8;
+        }
+
+        .menu-table td .btn {
+            margin: 0 5px;
+        }
+
+        .price {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .selected-items {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        .selected-items-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .selected-items-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .specialties, .menu-table {
+                padding: 1.5rem;
+            }
+
+            .menu-table th, .menu-table td {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="logo">Jasmine Restaurant</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" class="d-block w-100" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b" class="d-block w-100" alt="">
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1523905330026-b8bd1f5f320e" class="d-block w-100" alt="">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <div class="container">
+        <section class="specialties">
+            <h2 class="section-title">Our Specialties</h2>
+            <ol class="specialties-list">
+                <li>Authentic Italian Pasta & Risotto</li>
+                <li>Wood-Fired Neapolitan Pizza</li>
+                <li>Fresh Mediterranean Seafood</li>
+                <li>Traditional Tuscan Grilled Meats</li>
+                <li>Homemade Italian Desserts</li>
+            </ol>
+        </section>
+
+        <section id="menu">
+            <h2 class="section-title">Featured Menu</h2>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Dish Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Risotto al Tartufo</td>
+                        <td class="price">$32</td>
+                        <td class="description">Creamy Arborio rice with fresh black truffles and Parmigiano-Reggiano</td>
+                        <td>
+                            <button class="btn btn-success btn-sm add-item">Add</button>
+                            <button class="btn btn-danger btn-sm remove-item" disabled>Remove</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Osso Buco</td>
+                        <td class="price">$38</td>
+                        <td class="description">Braised veal shanks with gremolata and saffron risotto</td>
+                        <td>
+                            <button class="btn btn-success btn-sm add-item">Add</button>
+                            <button class="btn btn-danger btn-sm remove-item" disabled>Remove</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Margherita D.O.P.</td>
+                        <td class="price">$24</td>
+                        <td class="description">San Marzano tomatoes, buffalo mozzarella, fresh basil, extra virgin olive oil</td>
+                        <td>
+                            <button class="btn btn-success btn-sm add-item">Add</button>
+                            <button class="btn btn-danger btn-sm remove-item" disabled>Remove</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Branzino al Forno</td>
+                        <td class="price">$36</td>
+                        <td class="description">Whole roasted Mediterranean sea bass with herbs and lemon</td>
+                        <td>
+                            <button class="btn btn-success btn-sm add-item">Add</button>
+                            <button class="btn btn-danger btn-sm remove-item" disabled>Remove</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tiramisu</td>
+                        <td class="price">$12</td>
+                        <td class="description">Classic Italian dessert with mascarpone, coffee, and cocoa</td>
+                        <td>
+                            <button class="btn btn-success btn-sm add-item">Add</button>
+                            <button class="btn btn-danger btn-sm remove-item" disabled>Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="selected-items">
+                <h3 class="section-title" style="font-size: 1.8rem;">Selected Items</h3>
+                <ul class="selected-items-list"></ul>
+                <div class="text-end mt-3">
+                    <h4>Total: $<span id="total-price">0</span></h4>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer style="background-color: black; color: white; text-align: center; padding: 20px; margin-top: 20px;">
+        <p>Location: Padmaraonagar, Hyderabad</p>
+        <p>Contact: 1234567899</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const selectedList = document.querySelector('.selected-items-list');
+            const totalPrice = document.getElementById('total-price');
+            let currentTotal = 0;
+            document.querySelectorAll('.menu-table tbody tr').forEach(row => {
+                const addBtn = row.querySelector('.add-item');
+                const removeBtn = row.querySelector('.remove-item');
+                const dishName = row.cells[0].textContent;
+                const price = Number(row.cells[1].textContent.replace('$', ''));
+
+            
+                addBtn.addEventListener('click', () => {
+                    const item = document.createElement('li');
+                    item.textContent = `${dishName} - $${price}`;
+                    selectedList.appendChild(item);
+                    addBtn.disabled = true;
+                    removeBtn.disabled = false;
+                    currentTotal += price;
+                    totalPrice.textContent = currentTotal.toFixed(2);
+                });
+
+                removeBtn.addEventListener('click', () => {
+                    const items = selectedList.querySelectorAll('li');
+                    for (let item of items) {
+                        if (item.textContent.includes(dishName)) {
+                            item.remove();
+                            break;
+                        }
+                    }
+                    addBtn.disabled = false;
+                    removeBtn.disabled = true;
+                    currentTotal -= price;
+                    totalPrice.textContent = currentTotal.toFixed(2);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
